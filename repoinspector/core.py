@@ -99,7 +99,7 @@ def _python_findings(tree: ast.AST, text: str, path: str) -> tuple[list[dict[str
         (r"\beval\s*\(", "security.dynamic_eval", "high", "Use of eval can execute input as code"),
         (r"\bexec\s*\(", "security.dynamic_exec", "high", "Use of exec can execute input as code"),
         (r"pickle\.loads\s*\(", "security.unsafe_deserialization", "high", "pickle deserialization can execute unsafe payloads"),
-        (r"subprocess\.[A-Za-z_]+\s*\([^\n]*shell\s*=\s*True", "security.shell_true", "shell=True needs strict input control"),
+        (r"subprocess\.[A-Za-z_]+\s*\([^\n]*shell\s*=\s*True", "security.shell_true", "high", "shell=True needs strict input control"),
     ]
     for pattern, rule, severity, message in security_patterns:
         for match in re.finditer(pattern, text):
