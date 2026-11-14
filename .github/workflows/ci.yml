@@ -17,3 +17,13 @@ jobs:
           python-version: "3.12"
       - name: Run standard-library test suite
         run: python -m unittest discover -s tests -v
+      - name: Generate sample and self reports
+        run: |
+          mkdir -p reports
+          python -m repoinspector --path examples/sample_project --output reports/sample_report
+          python -m repoinspector --path . --output reports/self_report
+      - name: Upload generated reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: repoinspector-reports
+          path: reports/
