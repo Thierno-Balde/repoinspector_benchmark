@@ -1,0 +1,416 @@
+{
+  "tool": "RepoInspector",
+  "version": "0.1.0",
+  "root": ".",
+  "summary": {
+    "files": {
+      "total": 9,
+      "python": 7,
+      "javascript": 2
+    },
+    "lines": {
+      "total": 541,
+      "code": 483,
+      "blank": 57,
+      "comments": 1
+    },
+    "findings": 13,
+    "findings_by_severity": {
+      "low": 4,
+      "medium": 8,
+      "high": 1,
+      "critical": 0
+    },
+    "quality_score": 32,
+    "score_method": "100 minus 2/6/12/20 points for low/medium/high/critical findings, bounded to 0..100; indicative only."
+  },
+  "files": [
+    {
+      "path": "examples/sample_project/bad.py",
+      "language": "python",
+      "lines": {
+        "total": 48,
+        "code": 42,
+        "blank": 6,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "unsafe",
+          "line": 5,
+          "end_line": 6,
+          "lines": 2
+        },
+        {
+          "name": "too_long",
+          "line": 9,
+          "end_line": 42,
+          "lines": 34
+        }
+      ]
+    },
+    {
+      "path": "examples/sample_project/good.py",
+      "language": "python",
+      "lines": {
+        "total": 7,
+        "code": 4,
+        "blank": 3,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "read_name",
+          "line": 6,
+          "end_line": 7,
+          "lines": 2
+        }
+      ]
+    },
+    {
+      "path": "examples/sample_project/web/app.js",
+      "language": "javascript",
+      "lines": {
+        "total": 37,
+        "code": 36,
+        "blank": 1,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "render",
+          "line": 4,
+          "end_line": 37,
+          "lines": 34
+        }
+      ]
+    },
+    {
+      "path": "examples/sample_project/web/clean.js",
+      "language": "javascript",
+      "lines": {
+        "total": 3,
+        "code": 3,
+        "blank": 0,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "add",
+          "line": 1,
+          "end_line": 3,
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "path": "repoinspector/__init__.py",
+      "language": "python",
+      "lines": {
+        "total": 5,
+        "code": 3,
+        "blank": 2,
+        "comments": 0
+      },
+      "functions": []
+    },
+    {
+      "path": "repoinspector/__main__.py",
+      "language": "python",
+      "lines": {
+        "total": 4,
+        "code": 3,
+        "blank": 1,
+        "comments": 0
+      },
+      "functions": []
+    },
+    {
+      "path": "repoinspector/core.py",
+      "language": "python",
+      "lines": {
+        "total": 301,
+        "code": 277,
+        "blank": 23,
+        "comments": 1
+      },
+      "functions": [
+        {
+          "name": "_finding",
+          "line": 20,
+          "end_line": 23,
+          "lines": 4
+        },
+        {
+          "name": "_line_metrics",
+          "line": 26,
+          "end_line": 51,
+          "lines": 26
+        },
+        {
+          "name": "_python_functions",
+          "line": 54,
+          "end_line": 64,
+          "lines": 11
+        },
+        {
+          "name": "_python_findings",
+          "line": 67,
+          "end_line": 124,
+          "lines": 58
+        },
+        {
+          "name": "_js_functions",
+          "line": 127,
+          "end_line": 153,
+          "lines": 27
+        },
+        {
+          "name": "_javascript_findings",
+          "line": 156,
+          "end_line": 198,
+          "lines": 43
+        },
+        {
+          "name": "analyze_path",
+          "line": 201,
+          "end_line": 247,
+          "lines": 47
+        },
+        {
+          "name": "render_markdown",
+          "line": 250,
+          "end_line": 274,
+          "lines": 25
+        },
+        {
+          "name": "write_reports",
+          "line": 277,
+          "end_line": 284,
+          "lines": 8
+        },
+        {
+          "name": "main",
+          "line": 287,
+          "end_line": 301,
+          "lines": 15
+        }
+      ]
+    },
+    {
+      "path": "tests/test_analyzer.py",
+      "language": "python",
+      "lines": {
+        "total": 95,
+        "code": 80,
+        "blank": 15,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "analyze",
+          "line": 9,
+          "end_line": 19,
+          "lines": 11
+        },
+        {
+          "name": "test_recursive_detection_and_line_counts",
+          "line": 21,
+          "end_line": 31,
+          "lines": 11
+        },
+        {
+          "name": "test_python_unused_import_is_reported_conservatively",
+          "line": 33,
+          "end_line": 37,
+          "lines": 5
+        },
+        {
+          "name": "test_python_flags_empty_and_broad_except",
+          "line": 39,
+          "end_line": 43,
+          "lines": 5
+        },
+        {
+          "name": "test_python_long_function_and_security",
+          "line": 45,
+          "end_line": 49,
+          "lines": 5
+        },
+        {
+          "name": "test_javascript_unused_import_long_function_and_security",
+          "line": 51,
+          "end_line": 58,
+          "lines": 8
+        },
+        {
+          "name": "test_empty_directory_has_perfect_indicative_score",
+          "line": 60,
+          "end_line": 63,
+          "lines": 4
+        },
+        {
+          "name": "test_missing_path_is_an_error",
+          "line": 65,
+          "end_line": 69,
+          "lines": 5
+        },
+        {
+          "name": "test_bad_encodings_are_reported_and_analysis_continues",
+          "line": 71,
+          "end_line": 75,
+          "lines": 5
+        },
+        {
+          "name": "test_reexports_and_strings_are_not_false_security_findings",
+          "line": 77,
+          "end_line": 84,
+          "lines": 8
+        },
+        {
+          "name": "test_score_is_bounded_and_decreases_with_findings",
+          "line": 86,
+          "end_line": 91,
+          "lines": 6
+        }
+      ]
+    },
+    {
+      "path": "tests/test_cli.py",
+      "language": "python",
+      "lines": {
+        "total": 41,
+        "code": 35,
+        "blank": 6,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "test_help_lists_required_options",
+          "line": 10,
+          "end_line": 14,
+          "lines": 5
+        },
+        {
+          "name": "test_cli_writes_json_and_markdown",
+          "line": 16,
+          "end_line": 31,
+          "lines": 16
+        },
+        {
+          "name": "test_cli_rejects_missing_directory",
+          "line": 33,
+          "end_line": 37,
+          "lines": 5
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "path": "examples/sample_project/bad.py",
+      "line": 1,
+      "rule": "python.unused_import",
+      "severity": "low",
+      "message": "Imported name 'os' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "examples/sample_project/bad.py",
+      "line": 2,
+      "rule": "python.unused_import",
+      "severity": "low",
+      "message": "Imported name 'math' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "examples/sample_project/bad.py",
+      "line": 47,
+      "rule": "python.empty_except",
+      "severity": "medium",
+      "message": "Exception handler is empty or only suppresses the error"
+    },
+    {
+      "path": "examples/sample_project/bad.py",
+      "line": 47,
+      "rule": "python.broad_except",
+      "severity": "medium",
+      "message": "Exception handler catches too broadly"
+    },
+    {
+      "path": "examples/sample_project/bad.py",
+      "line": 6,
+      "rule": "security.dynamic_eval",
+      "severity": "high",
+      "message": "Use of eval can execute input as code"
+    },
+    {
+      "path": "examples/sample_project/bad.py",
+      "line": 9,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function 'too_long' spans 34 lines",
+      "symbol": "too_long",
+      "lines": 34
+    },
+    {
+      "path": "examples/sample_project/web/app.js",
+      "line": 1,
+      "rule": "javascript.unused_import",
+      "severity": "low",
+      "message": "Imported name 'fs' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "examples/sample_project/web/app.js",
+      "line": 2,
+      "rule": "javascript.unused_import",
+      "severity": "low",
+      "message": "Imported name 'join' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "examples/sample_project/web/app.js",
+      "line": 36,
+      "rule": "security.dom_injection",
+      "severity": "medium",
+      "message": "innerHTML assignment can introduce DOM injection"
+    },
+    {
+      "path": "examples/sample_project/web/app.js",
+      "line": 4,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function 'render' spans 34 lines",
+      "symbol": "render",
+      "lines": 34
+    },
+    {
+      "path": "repoinspector/core.py",
+      "line": 67,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function '_python_findings' spans 58 lines",
+      "symbol": "_python_findings",
+      "lines": 58
+    },
+    {
+      "path": "repoinspector/core.py",
+      "line": 156,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function '_javascript_findings' spans 43 lines",
+      "symbol": "_javascript_findings",
+      "lines": 43
+    },
+    {
+      "path": "repoinspector/core.py",
+      "line": 201,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function 'analyze_path' spans 47 lines",
+      "symbol": "analyze_path",
+      "lines": 47
+    }
+  ]
+}
