@@ -94,7 +94,7 @@ def _python_findings(tree: ast.AST, text: str, path: str) -> tuple[list[dict[str
                 if isinstance(exported, (list, tuple)):
                     used.update(item for item in exported if isinstance(item, str))
             except (ValueError, TypeError, SyntaxError):
-                pass
+                exported = []
     for bound, line, original in imports:
         if bound not in used:
             findings.append(_finding(path, line, "python.unused_import", "low", f"Imported name '{original}' appears unused", confidence="heuristic"))

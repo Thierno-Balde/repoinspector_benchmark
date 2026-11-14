@@ -74,6 +74,15 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(len(errors), 2)
         self.assertIn("ok.py", {f["path"] for f in report["files"]})
 
+    def test_reexports_and_strings_are_not_false_security_findings(self):
+        report = self.analyze({
+            "__init__.py": "from .core import analyze_path\n__all__ = [\"analyze_path\"]\n",
+            "fixture.py": "payload = \"eval(user_input)\"\n",
+        })
+        rules = {f["rule"] for f in report["findings"]}
+        self.assertNotIn("python.unused_import", rules)
+        self.assertNotIn("security.dynamic_eval", rules)
+
     def test_score_is_bounded_and_decreases_with_findings(self):
         clean = self.analyze({"ok.py": "x = 1\n"})
         noisy = self.analyze({"bad.py": "import os\ndef f(x):\n    return eval(x)\n"})
