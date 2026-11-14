@@ -1,0 +1,187 @@
+{
+  "tool": "RepoInspector",
+  "version": "0.1.0",
+  "root": "examples/sample_project",
+  "summary": {
+    "files": {
+      "total": 4,
+      "python": 2,
+      "javascript": 2
+    },
+    "lines": {
+      "total": 95,
+      "code": 85,
+      "blank": 10,
+      "comments": 0
+    },
+    "findings": 10,
+    "findings_by_severity": {
+      "low": 4,
+      "medium": 5,
+      "high": 1,
+      "critical": 0
+    },
+    "quality_score": 50,
+    "score_method": "100 minus 2/6/12/20 points for low/medium/high/critical findings, bounded to 0..100; indicative only."
+  },
+  "files": [
+    {
+      "path": "bad.py",
+      "language": "python",
+      "lines": {
+        "total": 48,
+        "code": 42,
+        "blank": 6,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "unsafe",
+          "line": 5,
+          "end_line": 6,
+          "lines": 2
+        },
+        {
+          "name": "too_long",
+          "line": 9,
+          "end_line": 42,
+          "lines": 34
+        }
+      ]
+    },
+    {
+      "path": "good.py",
+      "language": "python",
+      "lines": {
+        "total": 7,
+        "code": 4,
+        "blank": 3,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "read_name",
+          "line": 6,
+          "end_line": 7,
+          "lines": 2
+        }
+      ]
+    },
+    {
+      "path": "web/app.js",
+      "language": "javascript",
+      "lines": {
+        "total": 37,
+        "code": 36,
+        "blank": 1,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "render",
+          "line": 4,
+          "end_line": 37,
+          "lines": 34
+        }
+      ]
+    },
+    {
+      "path": "web/clean.js",
+      "language": "javascript",
+      "lines": {
+        "total": 3,
+        "code": 3,
+        "blank": 0,
+        "comments": 0
+      },
+      "functions": [
+        {
+          "name": "add",
+          "line": 1,
+          "end_line": 3,
+          "lines": 3
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "path": "bad.py",
+      "line": 1,
+      "rule": "python.unused_import",
+      "severity": "low",
+      "message": "Imported name 'os' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "bad.py",
+      "line": 2,
+      "rule": "python.unused_import",
+      "severity": "low",
+      "message": "Imported name 'math' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "bad.py",
+      "line": 47,
+      "rule": "python.empty_except",
+      "severity": "medium",
+      "message": "Exception handler is empty or only suppresses the error"
+    },
+    {
+      "path": "bad.py",
+      "line": 47,
+      "rule": "python.broad_except",
+      "severity": "medium",
+      "message": "Exception handler catches too broadly"
+    },
+    {
+      "path": "bad.py",
+      "line": 6,
+      "rule": "security.dynamic_eval",
+      "severity": "high",
+      "message": "Use of eval can execute input as code"
+    },
+    {
+      "path": "bad.py",
+      "line": 9,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function 'too_long' spans 34 lines",
+      "symbol": "too_long",
+      "lines": 34
+    },
+    {
+      "path": "web/app.js",
+      "line": 1,
+      "rule": "javascript.unused_import",
+      "severity": "low",
+      "message": "Imported name 'fs' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "web/app.js",
+      "line": 2,
+      "rule": "javascript.unused_import",
+      "severity": "low",
+      "message": "Imported name 'join' appears unused",
+      "confidence": "heuristic"
+    },
+    {
+      "path": "web/app.js",
+      "line": 36,
+      "rule": "security.dom_injection",
+      "severity": "medium",
+      "message": "innerHTML assignment can introduce DOM injection"
+    },
+    {
+      "path": "web/app.js",
+      "line": 4,
+      "rule": "function.too_long",
+      "severity": "medium",
+      "message": "Function 'render' spans 34 lines",
+      "symbol": "render",
+      "lines": 34
+    }
+  ]
+}
