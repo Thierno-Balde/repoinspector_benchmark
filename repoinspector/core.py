@@ -76,6 +76,8 @@ def _python_findings(tree: ast.AST, text: str, path: str) -> tuple[list[dict[str
                 imports.append((bound, node.lineno, alias.name))
         elif isinstance(node, ast.ImportFrom):
             imported_nodes.add(id(node))
+            if node.module == "__future__":
+                continue
             for alias in node.names:
                 if alias.name == "*":
                     continue
@@ -84,6 +86,15 @@ def _python_findings(tree: ast.AST, text: str, path: str) -> tuple[list[dict[str
     for node in ast.walk(tree):
         if isinstance(node, ast.Name) and not isinstance(node.ctx, ast.Store):
             used.add(node.id)
+    # Names exported from a package __init__.py are intentionally public API.
+    for node in getattr(tree, "body", []):
+        if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id == "__all__" for target in node.targets):
+            try:
+                exported = ast.literal_eval(node.value)
+                if isinstance(exported, (list, tuple)):
+                    used.update(item for item in exported if isinstance(item, str))
+            except (ValueError, TypeError, SyntaxError):
+                pass
     for bound, line, original in imports:
         if bound not in used:
             findings.append(_finding(path, line, "python.unused_import", "low", f"Imported name '{original}' appears unused", confidence="heuristic"))
@@ -95,15 +106,19 @@ def _python_findings(tree: ast.AST, text: str, path: str) -> tuple[list[dict[str
                 findings.append(_finding(path, node.lineno, "python.empty_except", "medium", "Exception handler is empty or only suppresses the error"))
             if broad:
                 findings.append(_finding(path, node.lineno, "python.broad_except", "medium", "Exception handler catches too broadly"))
-    security_patterns = [
-        (r"\beval\s*\(", "security.dynamic_eval", "high", "Use of eval can execute input as code"),
-        (r"\bexec\s*\(", "security.dynamic_exec", "high", "Use of exec can execute input as code"),
-        (r"pickle\.loads\s*\(", "security.unsafe_deserialization", "high", "pickle deserialization can execute unsafe payloads"),
-        (r"subprocess\.[A-Za-z_]+\s*\([^\n]*shell\s*=\s*True", "security.shell_true", "high", "shell=True needs strict input control"),
-    ]
-    for pattern, rule, severity, message in security_patterns:
-        for match in re.finditer(pattern, text):
-            findings.append(_finding(path, text.count("\n", 0, match.start()) + 1, rule, severity, message))
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        line = getattr(node, "lineno", 1)
+        if isinstance(node.func, ast.Name) and node.func.id == "eval":
+            findings.append(_finding(path, line, "security.dynamic_eval", "high", "Use of eval can execute input as code"))
+        elif isinstance(node.func, ast.Name) and node.func.id == "exec":
+            findings.append(_finding(path, line, "security.dynamic_exec", "high", "Use of exec can execute input as code"))
+        elif isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "pickle" and node.func.attr == "loads":
+            findings.append(_finding(path, line, "security.unsafe_deserialization", "high", "pickle deserialization can execute unsafe payloads"))
+        elif isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "subprocess":
+            if any(keyword.arg == "shell" and isinstance(keyword.value, ast.Constant) and keyword.value.value is True for keyword in node.keywords):
+                findings.append(_finding(path, line, "security.shell_true", "high", "shell=True needs strict input control"))
     functions, function_findings = _python_functions(tree, path)
     findings.extend(function_findings)
     return functions, findings
